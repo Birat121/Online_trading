@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/payment.css">
+
+  <title>Payment</title>
+</head>
+
+<body id="home">
+
+  <div class="messageDiv">
+
+    <p><%=message %></p>
+
+  </div>
+
+  <main class="container">
+
+    <section class="container-tophalf">
+
+      <!--============== Navigation Bar ===================== -->
+
+
+      <header class="container-nav">
+        <img src="img/logo-big.png" alt="logo" class="logo">
+
+        <nav>
+          <ul class="nav-bar">
+            <li class="nav-links"> <a href="/dashboard" class="nav-items">Home</a> </li>
+            <li class="nav-links"> <a href="/connect" class="nav-items">Connect Account</a> </li>
+              <li class="nav-links"> <a href="/load" class="nav-items">Load Money</a> </li>
+              <li class="nav-links"> <a href="/payment" class="nav-items">Payment</a> </li>
+                <li class="nav-links"> <a href="/transactions" class="nav-items">Transactions and Graph</a> </li>
+          </ul>
+        </nav>
+
+        <a href="/" class="login"><button class="btn">Logout</button> </a>
+      </header>
+
+    </section>
+
+    <br>
+
+
+
+    <div class="payment">
+      <h1 class="paymentText">Choose a method to make payment</h1>
+      <br>
+
+      <br>
+      <h1 class="methodPayment"><a href="#digitalWallet">Using Digital Wallet</a></h1>
+      <h1 class="methodPayment"><a href="#cryptoWallet">Using Crypto Wallet</a></h1>
+      <br>
+
+      <img src="img/dollar.png" alt="" class="bankIconHeader">
+      <img src="img/btc.png" alt="" class="btcIconHeader">
+    </div>
+
+
+
+    <div id="digitalWallet">
+      <div class="dw">
+        <h1>Pay Using Digital Wallet</h1>
+      </div>
+
+      <br>
+      <br>
+
+      <h3>Your Balance: <span class="balanceBox"> <%=balance %> </span> </h3>
+      <br>
+      <br>
+
+      <form action="/bankpayment" method="post">
+        <table>
+          <tr>
+            <td align="left">
+              <h3>Enter Amount to Pay </h3>
+            </td>
+            <td align="left"><input type="number" name="paymentAmount" class="Box"></td>
+          </tr>
+          <tr>
+            <td align="left">
+              <h3>Enter the Username of receiver </h3>
+            </td>
+            <td align="left"><input type="text" name="username" class="Box"></td>
+          </tr>
+          <tr>
+            <td align="left">
+              <h3>Enter Transaction Pin</h3>
+            </td>
+            <td align="left"><input type="password" inputmode="numeric" name="pin" class="Box"></td>
+          </tr>
+        </table>
+
+
+        <button type="submit" name="pay" class="btn btn-lg">Pay</button>
+      </form>
+
+      <br>
+
+
+
+    </div>
+
+
+
+      <br>
+
+
+  
+
+    <footer>
+      <p>© TradeIT 2021</p>
+      <div class="foot">
+        <a href="/feedback" >Provide Feedback</a>
+      </div>
+
+    </footer>
+  </main>
+
+</body>
+</html>

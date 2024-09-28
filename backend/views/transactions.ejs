@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/transactions.css">
+  <title>Transactions</title>
+</head>
+<body id="home">
+  <div class="messageDiv">
+    <p><%= message %></p>
+  </div>
+
+  <main class="container">
+    <section class="container-tophalf">
+      <!--============== Navigation Bar ===================== -->
+      <header class="container-nav">
+        <img src="img/logo-big.png" alt="logo" class="logo">
+        <nav>
+          <ul class="nav-bar">
+            <li class="nav-links"> <a href="/dashboard" class="nav-items">Home</a> </li>
+            <li class="nav-links"> <a href="/connect" class="nav-items">Connect Account</a> </li>
+            <li class="nav-links"> <a href="/load" class="nav-items">Load Money</a> </li>
+            <li class="nav-links"> <a href="/payment" class="nav-items">Payment</a> </li>
+            <li class="nav-links"> <a href="/transactions" class="nav-items">Transactions and Graph</a> </li>
+          </ul>
+        </nav>
+        <a href="/" class="login"><button class="btn">Logout</button> </a>
+      </header>
+
+      <div class="transactionsLog">
+        <br><br>
+        <form action="/transactionlog" method="post">
+          <button type="submit" name="button" class="btn">View Transactions Log</button>
+          <table class="transactionlogtable">
+            <tr>
+              <th>Transaction Date</th>
+              <th>Transaction Time</th>
+              <th>Transaction Amount</th>
+              <th>Wallet Balance</th>
+              <th>Transaction Type</th>
+            </tr>
+            <% transactions.forEach(function(transaction){ %>
+              <tr>
+                <td><%= transaction.date %></td>
+                <td><%= transaction.time %></td>
+                <td><%= transaction.transactionamt %></td>
+                <td><%= transaction.balance %></td>
+                <td><%= transaction.transactiontype %></td>
+              </tr>
+            <% }); %>
+          </table>
+        </form>
+
+        <br>
+
+        <form action="/transactiongraph" method="post">
+          <button type="submit" name="button" class="btn">View Wallet Balance History in a Graph</button>
+          <br><br>
+          <div id="curve_chart" style="width: 900px; height: 500px"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© TradeIT 2021</p>
+    <div class="foot">
+      <a href="/feedback">Provide Feedback</a>
+    </div>
+  </footer>
+
+  <% if (transactionGraph.length > 0) { %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Date');
+      data.addColumn('number', 'Balance');
+
+      var array = <%= JSON.stringify(transactionGraph) %>;
+
+      if (array && array.length > 0) {
+        array.forEach(function(transaction) {
+          data.addRows([transaction]);
+        });
+      }
+
+      var options = {
+        title: 'Wallet Balance History',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        hAxis: {
+          title: 'Date'
+        },
+        vAxis: {
+          title: 'Balance'
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      chart.draw(data, options);
+    }
+  </script>
+  <% } %>
+</body>
+</html>
